@@ -15,6 +15,9 @@ public class EmotionAPI {
         ee.modifyState(0, 0, delta);
     }
 
+    /**
+     * Sets the valence to a specific value by calculating the necessary delta.
+     */
     public static void setValence(UmweltEngine engine, float targetValue) {
         var ee = engine.getEmotionalEngine();
         float safeTarget = UmweltNBTUtils.safeFloat(targetValue, 0.0f);
@@ -22,6 +25,9 @@ public class EmotionAPI {
         ee.modifyState(delta, 0, 0);
     }
 
+    /**
+     * Sets the arousal to a specific value by calculating the necessary delta.
+     */
     public static void setArousal(UmweltEngine engine, float targetValue) {
         var ee = engine.getEmotionalEngine();
         float safeTarget = UmweltNBTUtils.safeFloat(targetValue, 0.0f);
