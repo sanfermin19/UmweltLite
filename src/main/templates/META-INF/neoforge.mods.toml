@@ -1,0 +1,42 @@
+# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
+modLoader="javafml"
+
+# A version range to match for said mod loader
+loaderVersion="${loader_version_range}"
+
+# The license for your mod.
+license="${mod_license}"
+
+[[mods]]
+# The modid of the mod - Updated to match your new Main class
+modId="umweltlite"
+
+# The version number of the mod
+version="${mod_version}"
+
+# A display name for the mod
+displayName="Umwelt Lite"
+
+# The authors of the mod
+authors="Fermine"
+
+# The description text for the mod
+description='''
+Mob Emotional States and Memory
+'''
+
+# A dependency for neoforge
+[[dependencies.umweltlite]]
+modId="neoforge"
+type="required"
+versionRange="[${neo_version},)"
+ordering="NONE"
+side="BOTH"
+
+# A dependency for minecraft
+[[dependencies.umweltlite]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
