@@ -1,27 +1,30 @@
 package com.fermine.umweltlite.api.engine;
 
-import com.fermine.umweltlite.engine.UmweltEngine;
-import com.fermine.umweltlite.engine.knowledge.entry.KnowledgeEntry;
+import com.fermine.umweltlite.impl.engine.UmweltEngine;
+import com.fermine.umweltlite.impl.engine.knowledge.entry.KnowledgeEntry;
 import com.fermine.umweltlite.utils.UmweltNBTUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class KnowledgeAPI {
 
     /**
-     * Injects an Emotional Bias as a "Permanent Fact".
-     * High confidence (1.0f) ensures it survives 'Deep Pruning'.
+     * Registers a persistent emotional disposition bias profile against an explicit EntityType profile.
+     * Bypasses standard aging mechanics completely due to absolute confidence metric pinning.
      */
     public static void setEmotionalBias(UmweltEngine engine, EntityType<?> type, float valence, float arousal) {
+        if (engine == null || type == null) return;
+
         String key = "bias_" + EntityType.getKey(type);
         CompoundTag data = new CompoundTag();
 
-        // Hard-clamp biases via NBT Helper to prevent NaN corruption
         data.putFloat("v", UmweltNBTUtils.safeFloat(valence, 0.0f));
         data.putFloat("a", UmweltNBTUtils.safeFloat(arousal, 0.0f));
 
@@ -29,63 +32,128 @@ public class KnowledgeAPI {
     }
 
     /**
-     * Injects a fact that will not decay naturally.
+     * Injects a raw factual entry with maximum structural permanence.
      */
     public static void setPermanentFact(UmweltEngine engine, String key, CompoundTag data) {
+        if (engine == null || key == null || data == null) return;
+
         long time = engine.getMob().level().getGameTime();
-        // The KnowledgeEntry constructor will now validate 'data' for finite math
         engine.getKnowledgeEngine().insertFact(key, new KnowledgeEntry(data, 1.0f, time));
     }
 
     /**
-     * Records a spatial memory with validation.
+     * Registers localized geographical memory maps with customizable processing confidences.
      */
     public static void setSpatialMemory(UmweltEngine engine, BlockPos pos, CompoundTag metadata, float confidence) {
-        long time = engine.getMob().level().getGameTime();
+        if (engine == null || pos == null || metadata == null) return;
 
-        // Safety: ensure confidence is valid before creating the entry
+        long time = engine.getMob().level().getGameTime();
         float safeConfidence = UmweltNBTUtils.safeFloat(confidence, 0.5f);
 
         engine.getKnowledgeEngine().insertSpatial(pos, new KnowledgeEntry(metadata, safeConfidence, time));
     }
 
     /**
-     * Removes a specific fact from the engine.
+     * Wipes a precise targeted factual tracking entry key string.
      */
     public static void wipeFact(UmweltEngine engine, String key) {
+        if (engine == null || key == null) return;
         engine.getKnowledgeEngine().removeFact(key);
     }
 
     /**
-     * Resets the mob's mind entirely.
+     * Safely executes deep cognitive system clears without tripping unmodifiable structure exceptions.
      */
     public static void clearAllKnowledge(UmweltEngine engine) {
-        engine.getKnowledgeEngine().getFactMap().clear();
-        engine.getKnowledgeEngine().getSpatialMap().clear();
+        if (engine == null) return;
+        engine.getKnowledgeEngine().clearAllMemoryChannels();
     }
 
     /**
-     * Resolves a target destination by querying the spatial knowledge map.
-     * Returns null if no valid or interesting memories are found.
+     * Queries the entity spatial database to provide optimized destination tracking possibilities.
+     * Returns null if no valid historical locations pass criteria.
      */
     public static Vec3 findUmweltTarget(UmweltEngine engine) {
-        var spatialMap = engine.getKnowledgeEngine().getSpatialMap(); //
-        var mob = engine.getMob(); //
+        if (engine == null) return null;
+
+        var spatialMap = engine.getKnowledgeEngine().getSpatialMap();
+        Mob mob = engine.getMob();
 
         if (!spatialMap.isEmpty() && mob.getRandom().nextFloat() < 0.7f) {
-            // 1. Get all known locations from the KnowledgeEngine
             List<BlockPos> knownPositions = new ArrayList<>(spatialMap.keySet());
-
-            // 2. Selection Logic: Pick a random "remembered" spot
             BlockPos targetPos = knownPositions.get(mob.getRandom().nextInt(knownPositions.size()));
 
-            // 3. Systems Check: Ensure it's not the exact block we are standing on
-            if (!targetPos.equals(mob.blockPosition())) {
+            if (targetPos != null && !targetPos.equals(mob.blockPosition())) {
                 return Vec3.atBottomCenterOf(targetPos);
             }
         }
 
-        // 4. Fallback: If the map is empty or the sheep feels adventurous
         return null;
+    }
+
+    // --- Modern Epistemological & Confidence Evaluation Hooks ---
+
+    /**
+     * Computes the current decaying confidence value of a semantic fact.
+     * Returns 0.0f if the fact does not exist within the entity's memory files.
+     */
+    public static float getFactConfidence(UmweltEngine engine, String key, long halfLife) {
+        if (engine == null || key == null) return 0.0f;
+        KnowledgeEntry entry = engine.getKnowledgeEngine().getFactMap().get(key);
+        if (entry == null) return 0.0f;
+
+        long gameTime = engine.getMob().level().getGameTime();
+        return entry.getCurrentConfidence(gameTime, halfLife);
+    }
+
+    /**
+     * Computes the current decaying confidence value of a specific spatial coordinate block memory.
+     * Returns 0.0f if the block location is unregistered.
+     */
+    public static float getSpatialConfidence(UmweltEngine engine, BlockPos pos, long halfLife) {
+        if (engine == null || pos == null) return 0.0f;
+        KnowledgeEntry entry = engine.getKnowledgeEngine().getSpatialMap().get(pos);
+        if (entry == null) return 0.0f;
+
+        long gameTime = engine.getMob().level().getGameTime();
+        return entry.getCurrentConfidence(gameTime, halfLife);
+    }
+
+    /**
+     * Evaluates whether a generic semantic fact has crossed its biological age threshold limit.
+     */
+    public static boolean isFactStale(UmweltEngine engine, String key, long lifespan) {
+        if (engine == null || key == null) return true;
+        KnowledgeEntry entry = engine.getKnowledgeEngine().getFactMap().get(key);
+        if (entry == null) return true;
+
+        long gameTime = engine.getMob().level().getGameTime();
+        return entry.isStale(gameTime, lifespan);
+    }
+
+    /**
+     * Evaluates whether a tracking spatial block memory pos has crossed its cognitive retention threshold.
+     */
+    public static boolean isSpatialStale(UmweltEngine engine, BlockPos pos, long lifespan) {
+        if (engine == null || pos == null) return true;
+        KnowledgeEntry entry = engine.getKnowledgeEngine().getSpatialMap().get(pos);
+        if (entry == null) return true;
+
+        long gameTime = engine.getMob().level().getGameTime();
+        return entry.isStale(gameTime, lifespan);
+    }
+
+    /**
+     * Retrieves a read-only view of the permanent facts map.
+     */
+    public static Map<String, KnowledgeEntry> getFactMap(UmweltEngine engine) {
+        return engine.getKnowledgeEngine().getFactMap();
+    }
+
+    /**
+     * Retrieves a read-only view of the spatial knowledge map.
+     */
+    public static Map<BlockPos, KnowledgeEntry> getSpatialMap(UmweltEngine engine) {
+        return engine.getKnowledgeEngine().getSpatialMap();
     }
 }

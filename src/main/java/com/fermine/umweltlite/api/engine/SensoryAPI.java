@@ -1,53 +1,63 @@
 package com.fermine.umweltlite.api.engine;
 
-
-import com.fermine.umweltlite.engine.UmweltEngine;
-import com.fermine.umweltlite.engine.memory.memory.Memory;
-import com.fermine.umweltlite.engine.sensory.inter.ISensory;
+import com.fermine.umweltlite.impl.engine.UmweltEngine;
+import com.fermine.umweltlite.impl.engine.sensory.inter.ISensory;
 
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Public API boundary for modifying and querying the entity sensory and short-term memory arrays.
+ * Tailored for modular goals, script engines, and integration hooks.
+ */
 public class SensoryAPI {
 
     /**
-     * Finds a specific sense instance by its class.
+     * Finds a specific sense instance by its class structure.
      */
     @SuppressWarnings("unchecked")
     public static <T extends ISensory> Optional<T> getSense(UmweltEngine engine, Class<T> senseClass) {
-        return engine.getSensoryEngine().getSenses().stream()
-                .filter(s -> s.getClass().equals(senseClass))
-                .map(s -> (T) s)
-                .findFirst();
+        if (engine == null || senseClass == null) {
+            return Optional.empty();
+        }
+
+        List<ISensory> activeSenses = engine.getSensoryEngine().getSenses();
+        int size = activeSenses.size();
+
+        for (ISensory sense : activeSenses) {
+            if (sense.getClass().equals(senseClass)) {
+                return Optional.of((T) sense);
+            }
+        }
+        return Optional.empty();
     }
 
     /**
-     * Custom implementation note: To actually "toggle" a sense, your specific
-     * sense classes (like OpticalSense) will need a 'boolean enabled' field
-     * and an override for 'isEnabled()'.
+     * Toggles the processing state of a specific sense type dynamically.
      */
     public static void setSenseEnabled(UmweltEngine engine, Class<? extends ISensory> senseClass, boolean enabled) {
+        if (engine == null || senseClass == null) return;
+
+        getSense(engine, senseClass).ifPresent(sense -> sense.setEnabled(enabled));
     }
 
     /**
-     * Directly injects a raw steering bias.
-     * Use 1.0 for hard right, -1.0 for hard left.
+     * Directly injects a raw steering bias into the sensory engine calculations.
+     * Use 1.0 for hard right vectors, -1.0 for hard left vectors.
      */
     public static void applySteeringBias(UmweltEngine engine, float bias) {
+        if (engine == null) return;
         engine.getSensoryEngine().setSteeringBias(bias);
     }
 
     /**
-     * Clears all memories matching a specific tag.
-     * The "Selective Amnesia" hook.
+     * Clears all short-term memories matching a specific context tag key-value criteria.
+     * Serves as the primary public engine hook for selective amnesia triggers.
      */
     public static void wipeSpecificMemories(UmweltEngine engine, String contextKey, String contextValue) {
-        // Query the MemoryEngine for all matching records
-        List<Memory> toDelete = engine.getMemoryEngine().query(contextKey, contextValue);
+        if (engine == null || contextKey == null || contextValue == null) return;
 
-        for (Memory m : toDelete) {
-            // Tell the MemoryEngine to forget this specific instance
-            engine.getMemoryEngine().forget(m);
-        }
+        // Optimized execution path: bypass intermediate array allocations by pushing the predicate downstream
+        engine.getMemoryEngine().removeIf(memory -> memory.matchesContext(contextKey, contextValue));
     }
 }

@@ -169,12 +169,22 @@ neoForge.ideSyncTask generateModMetadata
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
+            // This links the Java component to your publication
             from components.java
+
+            // Explicitly set these so other projects consuming your lib
+            // don't have to guess the group/artifact IDs
+            groupId = project.group
+            artifactId = project.base.archivesName.get()
+            version = project.version
         }
     }
     repositories {
+        // This sets up a local folder in your project named 'repo'
+        // If you want to use the true system-wide ~/.m2/repository,
+        // use mavenLocal() instead of the file path.
         maven {
-            url "file://${project.projectDir}/repo"
+            url = layout.projectDirectory.dir("repo")
         }
     }
 }
