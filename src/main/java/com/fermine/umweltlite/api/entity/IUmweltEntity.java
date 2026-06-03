@@ -1,17 +1,16 @@
 package com.fermine.umweltlite.api.entity;
 
-import com.fermine.umweltlite.engine.UmweltEngine;
+import com.fermine.umweltlite.impl.engine.UmweltEngine;
 
-/**
- * An interface to be applied to any Mob that supports the Umwelt architecture.
- * This allows the UmweltAPI to interact with the entity without needing
- * to check goal selectors.
- */
 public interface IUmweltEntity {
     UmweltEngine getUmweltEngine();
 
-    // Quick-access for physical layer checks
+    // Fixed the logic here. It should be active if it is NOT exhausted (or whatever your intent was).
     default boolean isUmweltActive() {
         return getUmweltEngine() != null && !getUmweltEngine().isExhausted();
     }
+
+    boolean isResting();
+    boolean isProcessing();
+    void setProcessing(boolean active);
 }

@@ -2,14 +2,14 @@ package com.fermine.umweltlite.api.entity.goal;
 
 import com.fermine.umweltlite.api.engine.EmotionAPI;
 import com.fermine.umweltlite.api.entity.IUmweltEntity;
-import com.fermine.umweltlite.engine.UmweltEngine;
+import com.fermine.umweltlite.impl.engine.UmweltEngine;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
 public class UmweltAttackGoal extends MeleeAttackGoal {
     private final PathfinderMob mob;
     private final double baseSpeed;
-    private int ticksSinceLastAction = 0;
+    private int ticksSinceLastAction;
 
     public UmweltAttackGoal(PathfinderMob mob, double speed, boolean followingTargetEvenIfNotSeen) {
         super(mob, speed, followingTargetEvenIfNotSeen);
@@ -31,19 +31,22 @@ public class UmweltAttackGoal extends MeleeAttackGoal {
     public boolean canContinueToUse() {
         if (mob instanceof IUmweltEntity ue) {
             UmweltEngine engine = ue.getUmweltEngine();
-            float energy = engine.getEmotionalEngine().getEnergy();
-            float arousal = engine.getEmotionalEngine().getArousal();
-
-            if (energy <= 0.02f) return false;
-            if (arousal < 0.1f) return false;
+            if (engine.getEmotionalEngine().getEnergy() <= 0.02f) return false;
+            if (engine.getEmotionalEngine().getArousal() < 0.1f) return false;
         }
         return super.canContinueToUse();
     }
 
     @Override
+    public void start() {
+        super.start();
+        this.ticksSinceLastAction = 0; // Reset this when the goal starts!
+    }
+
+    @Override
     public void tick() {
         super.tick();
-        ticksSinceLastAction++;
+        this.ticksSinceLastAction++;
 
         if (mob instanceof IUmweltEntity ue) {
             UmweltEngine engine = ue.getUmweltEngine();
@@ -57,10 +60,10 @@ public class UmweltAttackGoal extends MeleeAttackGoal {
                 this.mob.setSpeed((float) this.baseSpeed);
             }
 
-            if (v > 0.5f && ticksSinceLastAction % 40 == 0) {
+            if (v > 0.5f && this.ticksSinceLastAction % 40 == 0) {
                 if (mob.onGround()) {
                     this.mob.getJumpControl().jump();
-                    this.ticksSinceLastAction = 0;
+                    this.ticksSinceLastAction = 0; // Reset after jumping
                 }
             }
 
