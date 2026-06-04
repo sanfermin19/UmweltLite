@@ -1,10 +1,11 @@
 package com.fermine.umweltlite.brain.impl.sections;
 
 import com.fermine.umweltlite.brain.inter.IBrainComponent;
+import com.fermine.umweltlite.brain.inter.sections.IBrainStem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
-public class BrainStem implements IBrainComponent {
+public class BrainStem implements IBrainStem {
 
     // Core Floaters / Metrics
     private float heartRate = 70.0f;     // Baseline Beats Per Minute (BPM)

@@ -8,7 +8,7 @@ import com.fermine.umweltlite.api.engine.PersonalityAPI;
 import com.fermine.umweltlite.api.entity.IUmweltEntity;
 import com.fermine.umweltlite.impl.engine.UmweltEngine;
 import com.fermine.umweltlite.impl.engine.emotion.map.EmotionalMap;
-import com.fermine.umweltlite.registry.UmweltEntityRegistry;
+import com.fermine.umweltlite.impl.registry.UmweltEntityRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;

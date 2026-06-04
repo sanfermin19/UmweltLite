@@ -1,6 +1,6 @@
 package com.fermine.umweltlite.brain.impl.lobes;
 
-import com.fermine.umweltlite.brain.inter.IBrainComponent;
+import com.fermine.umweltlite.brain.inter.lobes.IOccipitalLobe;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,7 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import java.util.Optional;
 import java.util.UUID;
 
-public class OccipitalLobe implements IBrainComponent {
+public class OccipitalLobe implements IOccipitalLobe {
 
     // Visual tracking states
     private UUID focusedTargetUUID = null;
