@@ -1,14 +1,14 @@
 package com.fermine.umweltlite.brain.impl.lobes;
 
 import com.fermine.umweltlite.brain.impl.sections.Amygdala;
-import com.fermine.umweltlite.brain.inter.IBrainComponent;
+import com.fermine.umweltlite.brain.inter.lobes.IParietalLobe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
 
-public class ParietalLobe implements IBrainComponent {
+public class ParietalLobe implements IParietalLobe {
 
     private final Amygdala amygdala; // Cross-talk: Pain immediately spikes fear
 
@@ -30,7 +30,7 @@ public class ParietalLobe implements IBrainComponent {
         this.lastKnownPosition = host.blockPosition();
 
         // 3. Thermal & Somatosensory Sampling
-        // Sample the environment directly surrounding the host's body
+        //  the environment directly surrounding the host's body
         BlockPos bodyPos = host.blockPosition();
         boolean nearFireSource = host.level().getBlockState(bodyPos).is(Blocks.LAVA) ||
                 host.level().getBlockState(bodyPos.above()).is(Blocks.FIRE);

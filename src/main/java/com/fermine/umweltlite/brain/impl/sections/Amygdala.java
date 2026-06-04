@@ -1,15 +1,16 @@
 package com.fermine.umweltlite.brain.impl.sections;
 
-import com.fermine.umweltlite.brain.inter.IBrainComponent;
+import com.fermine.umweltlite.brain.inter.sections.IAmygdala; // FIX: Import the proper interface!
 import net.minecraft.world.entity.LivingEntity;
 
-public class Amygdala implements IBrainComponent {
+// FIX: Swap from IBrainComponent to IAmygdala
+public class Amygdala implements IAmygdala {
 
-    private final BrainStem brainStem; // Cross-talk: Primal emotion requires physiological data
+    private final BrainStem brainStem;
 
     // Core Floaters
-    private float panicFloater = 0.0f;      // 0.0 (Zen) to 1.0 (Absolute Dread)
-    private float aggressionFloater = 0.0f;  // 0.0 (Docile) to 1.0 (Enraged)
+    private float panicFloater = 0.0f;
+    private float aggressionFloater = 0.0f;
 
     public Amygdala(BrainStem brainStem) {
         this.brainStem = brainStem;
@@ -23,11 +24,10 @@ public class Amygdala implements IBrainComponent {
 
         // 2. Somatic Cross-talk: If the brain stem is hyper-exerted or suffocating, fuel the panic
         if (brainStem.isSuffocating()) {
-            triggerShock(0.05f); // Constant rising panic while drowning/suffocating
+            triggerShock(0.05f);
         }
 
         if (brainStem.getHeartRate() > 130.0f) {
-            // High heart rate naturally keeps the organism on edge, slowing panic decay
             this.panicFloater = Math.min(1.0f, this.panicFloater + 0.001f);
         }
     }
@@ -38,13 +38,9 @@ public class Amygdala implements IBrainComponent {
         this.aggressionFloater = 0.0f;
     }
 
-    /**
-     * Instantly spikes fear/panic metrics. Called by external sensory systems
-     * (like the Parietal Lobe registering pain or the Occipital Lobe seeing a threat).
-     */
+    @Override // Good practice to mark this as an override now that it's in the interface contract
     public void triggerShock(float intensity) {
         this.panicFloater = Math.min(1.0f, this.panicFloater + intensity);
-        // A panicked mind can trigger a sudden burst of energy back into the brainstem
         this.brainStem.exertEnergy(intensity * 0.2f);
     }
 
@@ -52,7 +48,9 @@ public class Amygdala implements IBrainComponent {
         this.aggressionFloater = Math.min(1.0f, this.aggressionFloater + amount);
     }
 
-    // Getters
+    @Override // Mark as override to fulfill the IAmygdala contract cleanly
     public float getPanicFloater() { return this.panicFloater; }
+
+    @Override // Mark as override to fulfill the IAmygdala contract cleanly
     public float getAggressionFloater() { return this.aggressionFloater; }
 }

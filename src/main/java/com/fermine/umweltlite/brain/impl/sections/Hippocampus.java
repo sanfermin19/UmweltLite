@@ -1,6 +1,6 @@
 package com.fermine.umweltlite.brain.impl.sections;
 
-import com.fermine.umweltlite.brain.inter.IBrainComponent;
+import com.fermine.umweltlite.brain.inter.sections.IHippocampus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class Hippocampus implements IBrainComponent {
+public class Hippocampus implements IHippocampus {
 
     // Memory Storage Units
     private final Map<UUID, Float> traumaRegistry = new HashMap<>();
