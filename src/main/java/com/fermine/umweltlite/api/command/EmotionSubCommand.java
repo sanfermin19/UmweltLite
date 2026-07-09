@@ -2,7 +2,7 @@ package com.fermine.umweltlite.api.command;
 
 import com.fermine.umweltlite.api.engine.EmotionAPI;
 import com.fermine.umweltlite.api.engine.UmweltAPI;
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;

@@ -1,7 +1,7 @@
 package com.fermine.umweltlite.api.engine;
 
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
-import com.fermine.umweltlite.impl.engine.personality.engine.PersonalityTemplate;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.personality.engine.PersonalityTemplate;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 

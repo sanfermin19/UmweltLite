@@ -1,7 +1,7 @@
 package com.fermine.umweltlite.api.engine;
 
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
-import com.fermine.umweltlite.impl.engine.sensory.inter.ISensory;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.sensory.inter.ISensory;
 
 import java.util.List;
 import java.util.Optional;

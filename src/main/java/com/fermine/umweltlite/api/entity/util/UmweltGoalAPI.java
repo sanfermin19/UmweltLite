@@ -2,7 +2,7 @@ package com.fermine.umweltlite.api.entity.util;
 
 import com.fermine.umweltlite.api.engine.KnowledgeAPI;
 import com.fermine.umweltlite.api.engine.PersonalityAPI;
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
 import com.fermine.umweltlite.api.entity.IUmweltEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;

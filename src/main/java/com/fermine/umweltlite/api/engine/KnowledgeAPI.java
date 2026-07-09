@@ -1,7 +1,7 @@
 package com.fermine.umweltlite.api.engine;
 
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
-import com.fermine.umweltlite.impl.engine.knowledge.entry.KnowledgeEntry;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.knowledge.entry.KnowledgeEntry;
 import com.fermine.umweltlite.utils.UmweltNBTUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

@@ -2,7 +2,7 @@ package com.fermine.umweltlite.api.entity.goal;
 
 import com.fermine.umweltlite.api.engine.EmotionAPI;
 import com.fermine.umweltlite.api.entity.IUmweltEntity;
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
