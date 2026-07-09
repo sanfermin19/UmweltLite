@@ -2,8 +2,8 @@ package com.fermine.umweltlite.api.command;
 
 import com.fermine.umweltlite.api.engine.KnowledgeAPI;
 import com.fermine.umweltlite.api.engine.UmweltAPI;
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
-import com.fermine.umweltlite.impl.engine.knowledge.entry.KnowledgeEntry;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.knowledge.entry.KnowledgeEntry;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;

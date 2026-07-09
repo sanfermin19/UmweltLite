@@ -2,7 +2,7 @@ package com.fermine.umweltlite.api.command;
 
 import com.fermine.umweltlite.api.engine.SensoryAPI;
 import com.fermine.umweltlite.api.engine.UmweltAPI;
-import com.fermine.umweltlite.impl.engine.sensory.inter.ISensory;
+import com.fermine.umweltlite.goals.engine.sensory.inter.ISensory;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;

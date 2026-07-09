@@ -1,7 +1,7 @@
 package com.fermine.umweltlite.api.entity.util;
 
 import com.fermine.umweltlite.api.entity.IUmweltEntity;
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Mob;

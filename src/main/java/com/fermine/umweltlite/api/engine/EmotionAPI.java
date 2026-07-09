@@ -1,7 +1,7 @@
 package com.fermine.umweltlite.api.engine;
 
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
-import com.fermine.umweltlite.impl.engine.emotion.map.AttachmentMap;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.emotion.map.AttachmentMap;
 import com.fermine.umweltlite.utils.UmweltNBTUtils;
 
 import java.util.Optional;

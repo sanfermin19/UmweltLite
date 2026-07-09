@@ -1,8 +1,8 @@
 package com.fermine.umweltlite.api.engine;
 
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
-import com.fermine.umweltlite.impl.engine.emotion.map.EmotionalMap;
-import com.fermine.umweltlite.impl.engine.memory.memory.Memory;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.emotion.map.EmotionalMap;
+import com.fermine.umweltlite.goals.engine.memory.memory.Memory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec3;
 

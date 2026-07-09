@@ -1,6 +1,6 @@
 package com.fermine.umweltlite.api.entity;
 
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
 
 public interface IUmweltEntity {
     UmweltEngine getUmweltEngine();

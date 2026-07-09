@@ -2,9 +2,9 @@ package com.fermine.umweltlite.api.command;
 
 import com.fermine.umweltlite.api.engine.MemoryAPI;
 import com.fermine.umweltlite.api.engine.UmweltAPI;
-import com.fermine.umweltlite.impl.engine.UmweltEngine;
-import com.fermine.umweltlite.impl.engine.emotion.map.EmotionalMap;
-import com.fermine.umweltlite.impl.engine.memory.memory.Memory;
+import com.fermine.umweltlite.goals.engine.UmweltEngine;
+import com.fermine.umweltlite.goals.engine.emotion.map.EmotionalMap;
+import com.fermine.umweltlite.goals.engine.memory.memory.Memory;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.LongArgumentType;
